@@ -71,8 +71,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/kategori">kategori</a>
                         <a class="collapse-item" href="/subkategori">subkategori</a>
-                        <a class="collapse-item" href="/slider">data slider</a>
                         <a class="collapse-item" href="/produk">data produk</a>
+                        <a class="collapse-item" href="/slider">data slider</a>
                         <a class="collapse-item" href="/member">data member</a>
                     </div>
                 </div>

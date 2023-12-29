@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +16,7 @@ class DashboardController extends Controller
     {
         try {
             // Ambil data total harga per bulan
-            $total_harga = Order::select(DB::raw("CAST(SUM(total_harga) as UNSIGNED) as total_harga"))
+            $total_harga = Order::where('status', 4)->select(DB::raw("CAST(SUM(total_harga) as UNSIGNED) as total_harga"))
                 ->groupBy(DB::raw("MONTH(created_at)"))
                 ->pluck('total_harga')
                 ->toArray();

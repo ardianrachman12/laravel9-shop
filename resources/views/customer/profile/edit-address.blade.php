@@ -94,7 +94,7 @@
                                 </div>
 
                                 <!-- Post Code-->
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="kode_pos" class="form-label">kode</label>
                                         <input type="text" class="form-control" id="kode_pos" name="kode_pos"

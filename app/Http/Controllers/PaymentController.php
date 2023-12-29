@@ -59,15 +59,19 @@ class PaymentController extends Controller
             $paymentStatus = 'settlement';
         } else if ($transaction == 'pending') {
             // TODO set payment status in merchant's database to 'Pending'
+            $order->update(['status_pembayaran' => 1]);
             $paymentStatus = 'pending';
         } else if ($transaction == 'deny') {
             // TODO set payment status in merchant's database to 'Denied'
+            $order->update(['status_pembayaran' => 1]);
             $paymentStatus = 'deny';
         } else if ($transaction == 'expire') {
             // TODO set payment status in merchant's database to 'expire'
+            $order->update(['status_pembayaran' => 1]);
             $paymentStatus = 'expire';
         } else if ($transaction == 'cancel') {
             // TODO set payment status in merchant's database to 'Denied'
+            $order->update(['status_pembayaran' => 1]);
             $paymentStatus = 'cancel';
         }
 

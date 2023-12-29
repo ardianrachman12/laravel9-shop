@@ -21,6 +21,8 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
+        $remember = $request->remember? true : false;
+
         $infoLogin = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -29,11 +31,11 @@ class AuthController extends Controller
             'password.required' => 'password wajib diisi',
         ]);
 
-        if (Auth::guard('web')->attempt($infoLogin)) {
+        if (Auth::guard('web')->attempt($infoLogin, $remember)) {
             $request->session()->regenerate();
             return redirect('dashboard');
         }
-        if (Auth::guard('member')->attempt($infoLogin)) {
+        if (Auth::guard('member')->attempt($infoLogin, $remember)) {
             $request->session()->regenerate();
             return redirect('/');
         } else {

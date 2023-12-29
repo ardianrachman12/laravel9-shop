@@ -106,7 +106,7 @@ Route::middleware('auth:member')->group(function () {
     Route::put('/profile/address/update-address{id}', [ProfileController::class, 'updateAddress'])->name('updateAddress');
 
 
-    Route::get('/checkout', [CheckoutController::class, 'index']);
+    // Route::get('/checkout', [CheckoutController::class, 'index']);
     Route::get('/checkout/shipping', [CheckoutController::class, 'shipping'])->name('shipping');
     Route::post('select-provinsi', [ProfileController::class, 'selectprovinsi'])->name('selectprovinsi');
 
@@ -114,12 +114,11 @@ Route::middleware('auth:member')->group(function () {
     Route::get('/checkout/order-confirm/{id}', [CheckoutController::class, 'orderconfirm'])->name('orderconfirm');
     // Route::post('/checkout/order-confirm/{id}',[CheckoutController::class, 'payment'])->name('payment');
 
-
     Route::get('/orderlist', [CheckoutController::class, 'orderlist'])->name('orderlist');
     Route::get('/orderlist/orderinfo/{id}', [CheckoutController::class, 'orderinfo'])->name('orderinfo');
 
     Route::get('/invoice/{id}', [CheckoutController::class, 'invoice'])->name('invoice');
-    Route::get('/send-invoice', [CheckoutController::class, 'sendInvoice']);
+    Route::get('/send-invoice/{id}', [CheckoutController::class, 'sendInvoice'])->name('sendInvoice');
     // Route::get('/checkout/getongkir',[CheckoutController::class, 'getongkir']);
     // Route::get('/checkout/getapi',[CheckoutController::class, 'getapi']);
     // Route::post('/checkout/getcost',[CheckoutController::class, 'getcost'])->name('getcost');

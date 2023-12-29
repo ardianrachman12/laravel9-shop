@@ -59,6 +59,15 @@
                                             name="email" value="{{ $email }}">
                                     </div>
                                 </div>
+
+                                <!-- Phone-->
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="no_hp" class="form-label">no_hp</label>
+                                        <input type="no_hp" class="form-control" id="no_hp" placeholder=""
+                                            name="no_hp" value="{{ $no_hp }}">
+                                    </div>
+                                </div>
                                 <div class="pt-2 mt-2 pb-2 border-top d-flex justify-content-md-start align-items-center">
                                     <button type="submit" class="btn btn-primary w-md-auto" role="button">Update</button>
                                     <button type="button" class="btn btn-danger ms-3 w-md-auto" data-toggle="modal"
@@ -141,7 +150,7 @@
                             </div>
 
                             <!-- Post Code-->
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="kode_pos" class="form-label">kode</label>
                                     <input type="text" class="form-control" id="kode_pos" name="kode_pos"

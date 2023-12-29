@@ -23,13 +23,14 @@ class ProfileController extends Controller
         if ($profil) {
             $nama = $profil->nama;
             $email = $profil->email;
+            $no_hp = $profil->no_hp;
             $address = Address::where('member_id', $profil->id)->first();
         }
 
         $provinces = Province::all();
         $cities = City::all();
 
-        return view('customer.profile.index', compact('nama', 'email', 'category', 'sub', 'profil', 'cities', 'provinces', 'address'));
+        return view('customer.profile.index', compact('nama', 'email','no_hp', 'category', 'sub', 'profil', 'cities', 'provinces', 'address'));
     }
 
     public function updateProfile(Request $request)
@@ -41,6 +42,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'email' => 'required|email|unique:members,email,' . $user->id, // Memastikan email unik kecuali untuk pengguna saat ini
+            'no_hp' => 'required|string|max:255',
         ]);
 
         // Jika validasi gagal, kembalikan pesan error
@@ -52,6 +54,7 @@ class ProfileController extends Controller
         // Memperbarui data pengguna
         $user->nama = $request->nama;
         $user->email = $request->email;
+        $user->no_hp = $request->no_hp;
         $user->update();
 
         // Redirect ke halaman profil dengan pesan sukses

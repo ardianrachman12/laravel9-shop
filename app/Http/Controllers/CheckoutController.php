@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Order;
 use App\Models\Orderdetail;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Province;
 use App\Models\Subcategory;
@@ -151,11 +152,11 @@ class CheckoutController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
-        
+
         foreach ($order as $items) {
             if ($items->status == 1 & $items->status_pembayaran == 0) {
                 $items->status = 'Pesanan baru';
-            }else if ($items->status == 1 & $items->status_pembayaran == 1) {
+            } else if ($items->status == 1 & $items->status_pembayaran == 1) {
                 $items->status = 'Pesanan Dibayar';
             } else if ($items->status == 2) {
                 $items->status = 'Pesanan Dikemas';
@@ -174,17 +175,18 @@ class CheckoutController extends Controller
     {
         $category = Category::all();
         $sub = Subcategory::all();
-
+        
         $profil = Auth::guard('member')->user();
         if ($profil) {
             $address = Address::where('member_id', $profil->id)->first();
             $order = Order::where('member_id', $profil->id)->findOrFail($id);
             $orderdetail = Orderdetail::where('order_id', $order->id)->get();
+            $payments = Payment::where('order_id', $order->id)->get();
         }
 
         if ($order->status == 1 & $order->status_pembayaran == 0) {
             $order->status = 'pesanan baru';
-        }else if ($order->status == 1 & $order->status_pembayaran == 1) {
+        } else if ($order->status == 1 & $order->status_pembayaran == 1) {
             $order->status = 'pesanan dibayar';
         } else if ($order->status == 2) {
             $order->status = 'pesanan dikemas';
@@ -221,24 +223,24 @@ class CheckoutController extends Controller
             $snapToken = \Midtrans\Snap::createTransaction($params);
             $redirect = $snapToken->redirect_url;
             $order->status_pembayaran = 'UNPAID';
-            return view('customer.order-info', compact('order', 'sub', 'category', 'address', 'orderdetail', 'redirect'));
+            return view('customer.order-info', compact('order', 'sub', 'category', 'payments', 'address', 'orderdetail', 'redirect'));
         } else {
             $order->status_pembayaran = 'PAID';
-            return view('customer.order-info', compact('order', 'sub', 'category', 'address', 'orderdetail'));
+            return view('customer.order-info', compact('order', 'sub', 'payments', 'category', 'address', 'orderdetail'));
         }
     }
 
-    public function invoice()
+    public function invoice($id)
     {
         $profil = Auth::guard('member')->user();
         if ($profil) {
             // $address = Address::where('member_id', $profil->id)->first();
-            $order = Order::where('member_id', $profil->id)->first();
+            $order = Order::where('member_id', $profil->id)->findOrFail($id);
             // $orderdetail = Orderdetail::where('order_id', $order->id)->get();
         }
         if ($order->status == 1 & $order->status_pembayaran == 0) {
             $order->status = 'pesanan baru';
-        }else if ($order->status == 1 & $order->status_pembayaran == 1) {
+        } else if ($order->status == 1 & $order->status_pembayaran == 1) {
             $order->status = 'pesanan dibayar';
         } else if ($order->status == 2) {
             $order->status = 'pesanan dikemas';
@@ -251,20 +253,21 @@ class CheckoutController extends Controller
         }
         // return view('customer.invoice',compact('order','orderdetail'));
 
-        $pdf = Pdf::loadView('customer.invoice',['order' => $order]);
-        return $pdf->download('invoice-'.$order->kode.'.pdf');
+        $pdf = Pdf::loadView('customer.invoice', ['order' => $order]);
+        return $pdf->download('invoice-' . $order->kode . '.pdf');
     }
 
-    public function sendInvoice() {
+    public function sendInvoice($id)
+    {
         $user = Auth::guard('member')->user();
-    
+
         if (!$user) {
             return redirect()->back()->with('error', 'User tidak ditemukan');
         }
-    
-        $order = Order::where('member_id', $user->id)->first();
+
+        $order = Order::where('member_id', $user->id)->findOrFail($id);
         // dd($order);
-    
+
         if ($order->status == 1 && $order->status_pembayaran == 0) {
             $order->status = 'pesanan baru';
         } else if ($order->status == 1 && $order->status_pembayaran == 1) {
@@ -278,7 +281,7 @@ class CheckoutController extends Controller
         } else {
             $order->status = 'pesanan dicancel';
         }
-    
+
         try {
             Mail::to($user->email)->send(new SendInvoice($order));
             return redirect()->back()->with('success', 'Invoice berhasil dikirim ke email');
@@ -286,7 +289,7 @@ class CheckoutController extends Controller
             return redirect()->back()->with('error', 'Gagal mengirim invoice. Error: ' . $e->getMessage());
         }
     }
-    
+
 
     // public function payment()
     // {
