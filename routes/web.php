@@ -109,6 +109,7 @@ Route::middleware('auth:member')->group(function () {
     // Route::get('/checkout', [CheckoutController::class, 'index']);
     Route::get('/checkout/shipping', [CheckoutController::class, 'shipping'])->name('shipping');
     Route::post('select-provinsi', [ProfileController::class, 'selectprovinsi'])->name('selectprovinsi');
+    Route::post('select-city', [ProfileController::class, 'selectCity'])->name('selectCity');
 
     Route::post('/checkout/placeorder', [CheckoutController::class, 'placeorder'])->name('placeorder');
     Route::get('/checkout/order-confirm/{id}', [CheckoutController::class, 'orderconfirm'])->name('orderconfirm');

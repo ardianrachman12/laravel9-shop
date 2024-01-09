@@ -28,12 +28,13 @@ class CheckoutController extends Controller
         if ($profil) {
             $nama = $profil->nama;
             $email = $profil->email;
+            $phone = $profil->no_hp;
             $address = Address::where('member_id', $profil->id)->first();
             $order = Order::where('member_id', $profil->id)->where('status', 0)->first();
             $orderdetail = Orderdetail::with('orders', 'products')->where('order_id', $order->id)->get();
         }
 
-        $origin = 39; //kab. bantul
+        $origin = 419; //kab. sleman
         $availableCouriers = ['jne', 'pos', 'tiki'];
 
         $results = [];
@@ -57,7 +58,7 @@ class CheckoutController extends Controller
         $provinces = Province::all();
         $cities = City::all();
 
-        return view('customer.checkout', compact('nama', 'email', 'address', 'category', 'sub', 'cities', 'provinces', 'order', 'orderdetail', 'responsecost', 'results'));
+        return view('customer.checkout', compact('nama', 'email', 'phone', 'address', 'category', 'sub', 'cities', 'provinces', 'order', 'orderdetail', 'responsecost', 'results'));
     }
 
     public function placeorder(Request $request)
@@ -175,7 +176,7 @@ class CheckoutController extends Controller
     {
         $category = Category::all();
         $sub = Subcategory::all();
-        
+
         $profil = Auth::guard('member')->user();
         if ($profil) {
             $address = Address::where('member_id', $profil->id)->first();

@@ -54,10 +54,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-2">
+            {{-- <div class="mt-2">
                 <button type="button" class="btn btn-success rounded me-2" data-toggle="modal"
                     data-target="#uploadModal">Upload</button>
-            </div>
+            </div> --}}
             <!-- Modal untuk mengunggah file -->
             <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
                 aria-hidden="true">

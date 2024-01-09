@@ -24,14 +24,38 @@
             })
         })
     </script>
+    <script>
+        $(function() {
+            $('#destination').on('change', function() {
+                let id_destination = $('#destination').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('selectCity') }}",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id_destination: id_destination
+                    },
+                    cache: false,
+
+                    success: function(response) {
+                        $('#postalCode').val(response.postal_code);
+                    },
+                    error: function(data) {
+                        console.log('error:', data)
+                    },
+                })
+            })
+        });
+    </script>
 @endpush
 @section('content')
-<section class="vh-lg-auto">
-    <!-- Page Content Goes Here -->
-    <div class="container-fluid mb-4">
-        @include('layouts.alert')
-    </div>
-    <div class="container-fluid">
+    <section class="vh-lg-auto">
+        <!-- Page Content Goes Here -->
+        <div class="container-fluid mb-4">
+            @include('layouts.alert')
+        </div>
+        <div class="container-fluid">
             <div class="row g-0 vh-lg-auto">
                 <div class="col-12 col-lg-7 mb-4">
                     <div class="pe-lg-5">
@@ -63,7 +87,7 @@
                                 <!-- Phone-->
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="no_hp" class="form-label">no_hp</label>
+                                        <label for="no_hp" class="form-label">Phone</label>
                                         <input type="no_hp" class="form-control" id="no_hp" placeholder=""
                                             name="no_hp" value="{{ $no_hp }}">
                                     </div>
@@ -140,8 +164,8 @@
                                 <div class="form-group">
                                     <label for="kota" class="form-label">Kota/Kabupaten</label>
                                     @if ($address)
-                                        <input type="text" class="form-control" id="city_id" placeholder="" required
-                                            name="city_id" readonly value="{{ $address->Cities->title }}">
+                                        <input type="text" class="form-control" id="city_id" placeholder=""
+                                            required name="city_id" readonly value="{{ $address->Cities->title }}">
                                     @else
                                         <select class="form-select" id="destination" name="city_id">
                                         </select>
@@ -152,11 +176,14 @@
                             <!-- Post Code-->
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="kode_pos" class="form-label">kode</label>
-                                    <input type="text" class="form-control" id="kode_pos" name="kode_pos"
-                                        placeholder=""
-                                        @if ($address) value="{{ $address->kode_pos }}" readonly @endif
-                                        required>
+                                    <label for="kode_pos" class="form-label">Kode Pos</label>
+                                    @if ($address)
+                                        <input type="text" class="form-control" id="kode_pos" name="kode_pos"
+                                            placeholder="" value="{{ $address->kode_pos }}" readonly>
+                                    @else
+                                        <input type="text" class="form-control" id="postalCode" name="kode_pos"
+                                            placeholder="" required>
+                                    @endif
                                 </div>
                             </div>
                         </div>

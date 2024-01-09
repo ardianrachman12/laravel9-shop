@@ -93,7 +93,8 @@ class OrderController extends Controller
             $order_detail->save();
         } else {
             $order_detail = Orderdetail::where('product_id', $product->id)->where('order_id', $order_new->id)->first();
-            if ($order_detail->qty == $product->stok) {
+            $sisa = $product->stok - $order_detail->qty;
+            if ($request->qty > $sisa) {
                 return redirect()->back()->with('warning', 'Produk pada keranjang melebihi stok');
             } else {
                 $order_detail->qty = $order_detail->qty + $request->qty;
@@ -127,7 +128,7 @@ class OrderController extends Controller
     //     }else {
     //         $order = Order::where('member_id', auth('member')->user()->id)->where('status', 0)->first();
     //         $order_detail = Orderdetail::where('product_id', $product->id)->where('order_id', $order->id)->first();
-    
+
     //         $order_detail->qty = $request->qty;
     //         $new_harga = $product->harga * $request->qty;
     //         $new_berat = $product->berat * $request->qty;

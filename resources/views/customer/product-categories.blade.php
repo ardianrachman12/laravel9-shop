@@ -21,7 +21,7 @@
                 <div class="d-flex justify-content-between items-center pt-2 pb-4 flex-column flex-lg-row">
                     <div>
                         <h1 class="fw-bold fs-3 mb-2">{{ $subcategory->nama }}</h1>
-                        <p class="m-0 text-muted small">Showing 4 of {{ $subcategory->products->count() }}</p>
+                        <p class="m-0 text-muted small">Showing {{ $subcategory->products->count() }} of {{ $subcategory->products->count() }}</p>
                     </div>
                 </div>
                 <!-- /Category Toolbar-->

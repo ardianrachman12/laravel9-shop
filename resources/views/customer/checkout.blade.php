@@ -31,6 +31,15 @@
                                     value="{{ $email }}" readonly>
                             </div>
                         </div>
+
+                        <!-- Phone-->
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="phone" class="form-control" id="phone" placeholder="" name="phone"
+                                    value="{{ $phone }}" readonly>
+                            </div>
+                        </div>
                         <h3 class="fs-5 mt-5 fw-bolder mb-4 border-bottom pb-4">Address</h3>
                         @if (!$address)
                             <a href="{{ route('profil') }}" type="button" class="btn btn-primary w-md-auto"

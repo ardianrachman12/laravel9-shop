@@ -30,7 +30,7 @@ class ProfileController extends Controller
         $provinces = Province::all();
         $cities = City::all();
 
-        return view('customer.profile.index', compact('nama', 'email','no_hp', 'category', 'sub', 'profil', 'cities', 'provinces', 'address'));
+        return view('customer.profile.index', compact('nama', 'email', 'no_hp', 'category', 'sub', 'profil', 'cities', 'provinces', 'address'));
     }
 
     public function updateProfile(Request $request)
@@ -94,5 +94,13 @@ class ProfileController extends Controller
         foreach ($cities as $city) {
             echo "<option value='{$city->id}'>{$city->title}</option>";
         }
+    }
+
+    public function selectCity(Request $request)
+    {
+        $id_destination = $request->id_destination;
+        $city = City::findOrFail($id_destination);
+
+        return response()->json(['postal_code' => $city->postal_code]);
     }
 }

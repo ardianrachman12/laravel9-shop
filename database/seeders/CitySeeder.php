@@ -15,14 +15,11 @@ class CitySeeder extends Seeder
      */
     public function run()
     {
-        $fileKota = file_get_contents(base_path('/database/kota.json'));
-        $fileKab = file_get_contents(base_path('/database/kabupaten.json'));
+        $fileKota = file_get_contents(base_path('/database/city.json'));
 
-        $dataKota = json_decode($fileKota, true);
-        $dataKab = json_decode($fileKab, true);
+        $city = json_decode($fileKota, true);
 
-        City::insert($dataKota);
-        City::insert($dataKab);
+        City::insert($city);
     
     }
 }

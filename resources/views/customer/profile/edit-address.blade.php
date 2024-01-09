@@ -24,6 +24,30 @@
             })
         })
     </script>
+    <script>
+        $(function() {
+            $('#destination').on('change', function() {
+                let id_destination = $('#destination').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('selectCity') }}",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id_destination: id_destination
+                    },
+                    cache: false,
+
+                    success: function(response) {
+                        $('#postalCode').val(response.postal_code);
+                    },
+                    error: function(data) {
+                        console.log('error:', data)
+                    },
+                })
+            })
+        });
+    </script>
 @endpush
 @section('content')
     <div class="container-fluid mb-4">
@@ -96,8 +120,8 @@
                                 <!-- Post Code-->
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="kode_pos" class="form-label">kode</label>
-                                        <input type="text" class="form-control" id="kode_pos" name="kode_pos"
+                                        <label for="kode_pos" class="form-label">Kode Pos</label>
+                                        <input type="text" class="form-control" id="postalCode" name="kode_pos"
                                             placeholder="" value="{{ $address->kode_pos }}">
                                     </div>
                                 </div>

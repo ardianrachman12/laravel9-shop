@@ -70,9 +70,25 @@ class ShipmentController extends Controller
         ])->get('https://api.rajaongkir.com/starter/city', [
             'province' => $request->province
         ]);
-        $data = $response['rajaongkir']['results'];
-        return response()->json($data);
+
+        $results = $response['rajaongkir']['results'];
+
+        $filteredData = array_map(function ($result) {
+            // Menggabungkan type dan city_name
+            $cityName = $result['type'] . ' ' . $result['city_name'];
+
+            return [
+                'id' => $result['city_id'],
+                'province_id' => $result['province_id'],
+                'title' => $cityName,
+                'postal_code' => $result['postal_code'],
+            ];
+        }, $results);
+
+        return response()->json($filteredData);
     }
+
+
 
     public function token(Request $request)
     {

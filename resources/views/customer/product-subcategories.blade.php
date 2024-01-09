@@ -16,7 +16,7 @@
                         </ol>
                     </nav>
                     <h1 class="fw-bold fs-3 mb-2">{{ $subcategory->nama }}</h1>
-                    <p class="m-0 text-muted small">Showing 1 - 9 of 121</p>
+                    <p class="m-0 text-muted small">Showing {{$subcategory->products->count()}} of {{$subcategory->products->count()}}</p>
                 </div>
                 {{-- <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
 
