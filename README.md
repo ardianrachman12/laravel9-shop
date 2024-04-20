@@ -10,7 +10,7 @@
 ## Instalasi
 
 1. clone menggunakan git clone atau download source code nya
-2. jalankan perintah composer update
+2. jalankan perintah composer install
 3. jalankan perintah php artisan key:generate
 4. jalankan perintah php artisan migrate
 5. jalankan perintah php artisan db:seed
