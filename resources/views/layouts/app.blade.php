@@ -19,7 +19,7 @@
         rel="stylesheet">
     <link rel="shortcut icon" type="image/png" sizes="16x16"
         href="{{ asset('bundle1/assets/images/spirit-small.png') }}">
-        
+
     <!-- Custom styles for this template-->
     <link href="/sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('sbadmin2/vendor/bootstrap/css/bootstrap.min.css') }}">
@@ -69,8 +69,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/kategori">kategori</a>
-                        <a class="collapse-item" href="/subkategori">subkategori</a>
+                        <a class="collapse-item" href="/kategori">data kategori</a>
+                        <a class="collapse-item" href="/subkategori">data subkategori</a>
                         <a class="collapse-item" href="/produk">data produk</a>
                         <a class="collapse-item" href="/slider">data slider</a>
                         <a class="collapse-item" href="/member">data member</a>
@@ -91,7 +91,7 @@
                         <a class="collapse-item" href="{{ route('pesanankemas') }}">pesanan dikemas</a>
                         <a class="collapse-item" href="{{ route('pesanankirim') }}">pesanan dikirim</a>
                         <a class="collapse-item" href="{{ route('pesananterima') }}">pesanan diterima</a>
-                        <a class="collapse-item" href="{{ route('pesanancancel') }}">pesanan cancel</a>
+                        <a class="collapse-item" href="{{ route('pesanancancel') }}">pesanan dibatalkan</a>
                     </div>
                 </div>
             </li>
@@ -106,8 +106,7 @@
                     <span>Laporan Pesanan</span></a>
             </li>
             <li class="nav-item">
-                <form action="{{ route('auth.logout') }}" method="GET"
-                    onsubmit="return confirm('Yakin akan dihapus?')">
+                <form action="{{ route('auth.logout') }}" method="GET" onsubmit="return confirm('Yakin logout?')">
                     @csrf
                     <button type="submit" class="nav-link bg-transparent border-0">
                         <i class="fas fa-fw fa-sign-out-alt"></i>
@@ -146,7 +145,23 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="/chat">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                {{-- <span class="badge badge-danger badge-counter">7</span> --}}
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            {{-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More
+                                    Messages</a>
+                            </div> --}}
+                        </li>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle me-2" id="userDropdown" role="button"

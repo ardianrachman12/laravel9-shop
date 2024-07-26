@@ -71,7 +71,7 @@
                                     <div class="form-group">
                                         <label for="firstNameBilling" class="form-label">Nama</label>
                                         <input type="text" class="form-control" id="firstNameBilling" placeholder=""
-                                            value="{{ $nama }}" required name="nama">
+                                            value="{{ $name }}" required name="name">
                                     </div>
                                 </div>
 

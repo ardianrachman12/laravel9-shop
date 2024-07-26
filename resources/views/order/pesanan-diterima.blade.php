@@ -26,7 +26,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->kode }}</td>
-                                <td>{{ $item->members->nama }}</td>
+                                <td>{{ $item->users->name }}</td>
                                 <td>{{ $item->payments->first()->status }}</td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>

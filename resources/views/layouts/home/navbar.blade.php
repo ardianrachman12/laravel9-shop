@@ -53,9 +53,9 @@
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown dropdown position-static">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Catalog
-                        </a>
+                                aria-expanded="false">
+                                Catalog
+                            </a>
                             <!-- Menswear dropdown menu-->
                             <div class="dropdown-menu dropdown-megamenu">
                                 <div class="container-fluid">
@@ -65,19 +65,19 @@
                                             <div class="row py-0 py-lg-0 flex-wrap gx-4 gy-4">
                                                 <!-- menu row-->
                                                 @foreach ($category->take(4) as $kategori)
-                                                <div class="col">
+                                                    <div class="col">
                                                         <h6 class="dropdown-heading">{{ $kategori->nama }}</h6>
                                                         <ul class="list-unstyled">
                                                             @foreach ($kategori->subcategories->take(3) as $subkategori)
-                                                            <li class="dropdown-list-item">
+                                                                <li class="dropdown-list-item">
                                                                     <a class="dropdown-item"
                                                                         href="{{ route('home.product-subcategories', ['id' => $subkategori->id]) }}">
                                                                         {{ $subkategori->nama }}
                                                                     </a>
                                                                 </li>
-                                                                @endforeach
-                                                                <li class="dropdown-list-item">
-                                                                    <a class="dropdown-item fw-bold"
+                                                            @endforeach
+                                                            <li class="dropdown-list-item">
+                                                                <a class="dropdown-item fw-bold"
                                                                     href="/product-categories/{{ $kategori->id }}">
                                                                     View All
                                                                 </a>
@@ -85,7 +85,7 @@
                                                         </ul>
                                                     </div>
                                                 @endforeach
-                                                
+
                                                 <!-- / menu row-->
                                             </div>
                                         </div>
@@ -132,11 +132,12 @@
                                 href="#">
                                 account
                             </a>
-                            @if (Auth::guard('member')->check())
+                            @if (Auth::check())
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('profil') }}">Profile</a></li>
                                     <li><a class="dropdown-item" href="{{ route('orderlist') }}">Orders</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('auth.logout') }}">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('auth.logout') }}"
+                                            onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
                                     <li><a class="dropdown-item" href="{{ route('auth.forgot-password') }}">Forgotten
                                             Password</a></li>
                                 </ul>
@@ -157,8 +158,15 @@
                             </a>
                         </li>
                         <!-- /Navbar Cart Icon-->
+                        <!-- chat Icon-->
+                        <li class="d-lg-inline-block nav-item dropdown">
+                            <a class="nav-link me-0 disable-child-pointer" href="/chat" type="button">
+                                Chat
+                            </a>
+                        </li>
+                        <!-- /Navbar Cart Icon-->
                         <!-- / Menu-->
-                    </ul>
+                        </ul>
                 </div>
                 <!-- / Main Navigation-->
 

@@ -15,16 +15,16 @@ class OrderController extends Controller
 {
     public function index()
     {
-        if (!auth('member')->check()) {
+        if (!Auth::check()) {
             // If not authenticated, redirect to the login page
-            return redirect()->route('login')->with('warning', 'Silakan login terlebih dahulu.');
+            return redirect('/login')->with('success', 'Silakan login terlebih dahulu.');
         }
-        $profil = Auth::guard('member')->user();
+        $profil = auth()->user();
 
         if ($profil) {
-            // Cari pesanan berdasarkan member_id
-            $order = Order::where('member_id', $profil->id)->where('status', 0)->first();
-            $address = Address::where('member_id', $profil->id)->first();
+            // Cari pesanan berdasarkan user_id
+            $order = Order::where('user_id', $profil->id)->where('status', 0)->first();
+            $address = Address::where('user_id', $profil->id)->first();
 
             if (!$order) {
                 return back()->with('warning', 'Keranjang belanja Anda masih kosong.');
@@ -37,13 +37,13 @@ class OrderController extends Controller
         $category = Category::all();
         $sub = Subcategory::all();
         // $orderdetail = Orderdetail::all();
-        return view('customer.cart', compact('category', 'sub', 'order', 'orderdetail', 'address'));
+        return view('customer.cart', compact('category', 'sub', 'order', 'orderdetail', 'address', 'profil'));
     }
 
     public function orderStore(Request $request, $id)
     {
 
-        if (!auth('member')->check()) {
+        if (!auth()->check()) {
             // If not authenticated, redirect to the login page
             return redirect()->route('login')->with('warning', 'Silakan login terlebih dahulu.');
         }
@@ -55,11 +55,11 @@ class OrderController extends Controller
         }
 
 
-        $order_cek = Order::where('member_id', auth('member')->user()->id)->where('status', 0)->first();
+        $order_cek = Order::where('user_id', auth()->user()->id)->where('status', 0)->first();
 
         if (empty($order_cek)) {
             $order = new Order;
-            $order->member_id = auth('member')->user()->id;
+            $order->user_id = auth()->user()->id;
             $order->status = 0;
             $order->total_berat = 0;
             $order->total_harga = 0;
@@ -79,7 +79,7 @@ class OrderController extends Controller
             $order->save();
         }
 
-        $order_new = Order::where('member_id', auth('member')->user()->id)->where('status', 0)->first();
+        $order_new = Order::where('user_id', auth()->user()->id)->where('status', 0)->first();
 
         $order_detail_cek = Orderdetail::where('product_id', $product->id)->where('order_id', $order_new->id)->first();
 
@@ -106,7 +106,7 @@ class OrderController extends Controller
             $order_detail->update();
         }
 
-        $order = Order::where('member_id', auth('member')->user()->id)->where('status', 0)->first();
+        $order = Order::where('user_id', auth()->user()->id)->where('status', 0)->first();
         $order->total_berat = $order->total_berat + $product->berat * $request->qty;
         $order->total_harga = $order->total_harga + $product->harga * $request->qty;
         $order->grand_total = $order->grand_total + $product->harga * $request->qty;
@@ -126,7 +126,7 @@ class OrderController extends Controller
     //     if ($request->qty > $product->stok) {
     //         return redirect()->back()->with('warning', 'Stok kurang');
     //     }else {
-    //         $order = Order::where('member_id', auth('member')->user()->id)->where('status', 0)->first();
+    //         $order = Order::where('user_id', auth('member')->user()->id)->where('status', 0)->first();
     //         $order_detail = Orderdetail::where('product_id', $product->id)->where('order_id', $order->id)->first();
 
     //         $order_detail->qty = $request->qty;
@@ -142,7 +142,7 @@ class OrderController extends Controller
         $hargakurang = $orderdetails->jumlah_harga;
         $beratkurang = $orderdetails->jumlah_berat;
 
-        $order = Order::where('member_id', auth('member')->user()->id)->where('status', 0)->first();
+        $order = Order::where('user_id', auth()->user()->id)->where('status', 0)->first();
         $order->total_harga = $order->total_harga - $hargakurang;
         $order->total_berat = $order->total_berat - $beratkurang;
         $order->update();

@@ -19,29 +19,29 @@ class ProfileController extends Controller
     {
         $category = Category::all();
         $sub = Subcategory::all();
-        $profil = Auth::guard('member')->user();
+        $profil = Auth::user();
         if ($profil) {
-            $nama = $profil->nama;
+            $name = $profil->name;
             $email = $profil->email;
             $no_hp = $profil->no_hp;
-            $address = Address::where('member_id', $profil->id)->first();
+            $address = Address::where('user_id', $profil->id)->first();
         }
 
         $provinces = Province::all();
         $cities = City::all();
 
-        return view('customer.profile.index', compact('nama', 'email', 'no_hp', 'category', 'sub', 'profil', 'cities', 'provinces', 'address'));
+        return view('customer.profile.index', compact('name', 'email', 'no_hp', 'category', 'sub', 'profil', 'cities', 'provinces', 'address'));
     }
 
     public function updateProfile(Request $request)
     {
         // Mendapatkan data pengguna yang sedang login
-        $user = Auth::guard('member')->user();
+        $user = Auth::user();
 
         // Membuat validator untuk data yang diterima dari request
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:members,email,' . $user->id, // Memastikan email unik kecuali untuk pengguna saat ini
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id, // Memastikan email unik kecuali untuk pengguna saat ini
             'no_hp' => 'required|string|max:255',
         ]);
 
@@ -52,9 +52,14 @@ class ProfileController extends Controller
                 ->withInput();
         }
         // Memperbarui data pengguna
-        $user->nama = $request->nama;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->no_hp = $request->no_hp;
+        $user->role = "member";
+
+        // dd($user);
+
+        // $update = new $user;
         $user->update();
 
         // Redirect ke halaman profil dengan pesan sukses
@@ -62,8 +67,8 @@ class ProfileController extends Controller
     }
     public function createAddress(Request $request)
     {
-        $memberId = auth('member')->user()->id;
-        Address::create(array_merge($request->all(), ['member_id' => $memberId]));
+        $memberId = auth()->user()->id;
+        Address::create(array_merge($request->all(), ['user_id' => $memberId]));
         return back()->with('success', 'Berhasil menambahkan alamat');
     }
     public function updateAddress(Request $request, String $id)

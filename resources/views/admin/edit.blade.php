@@ -13,11 +13,15 @@
                 @method('PUT')
                 <div>
                     <label>Nama</label>
-                    <input type="text" class="form-control mb-2" name="nama" value="{{ $data->name }}">
+                    <input type="text" class="form-control mb-2" name="name" value="{{ $data->name }}">
                 </div>
                 <div>
                     <label>Email</label>
                     <input type="email" class="form-control mb-2" name="email" value="{{ $data->email }}">
+                </div>
+                <div>
+                    <label>No HP</label>
+                    <input type="text" class="form-control mb-2" name="no_hp" value="{{ $data->no_hp }}">
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Simpan</button>

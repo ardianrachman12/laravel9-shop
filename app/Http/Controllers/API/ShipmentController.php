@@ -137,4 +137,26 @@ class ShipmentController extends Controller
 
         return response()->json($snapToken);
     }
+
+    public function order(Request $request){
+        $product = $request->produk;
+        
+        // Make sure $product is a string
+        // $product = (string)$product;
+    
+        $total = 10000;
+    
+        // Make sure $total is a string
+        $total = (string)$total;
+    
+        $url = "Saya ingin beli " . $product . "\nTotal = " . $total;
+    
+        $urlencode = urlencode($url);
+    
+        $baseurl = "https://wa.me/6285869225605?text=".$urlencode;
+    
+        return response()->json($baseurl);
+    }
+    
+    
 }

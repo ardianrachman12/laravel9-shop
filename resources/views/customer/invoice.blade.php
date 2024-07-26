@@ -14,9 +14,9 @@
         </div>
         <div class="billing-info" style="padding-bottom: 10px; font-size: 10px;">
             <h2>Billing Information</h2>
-            <p>Name: {{ $order->members->nama }}</p>
-            <p>Email: {{ $order->members->email }}</p>
-            <p>Phone: {{ $order->members->no_hp }}</p>
+            <p>Name: {{ $order->users->name }}</p>
+            <p>Email: {{ $order->users->email }}</p>
+            <p>Phone: {{ $order->users->no_hp }}</p>
         </div>
         <div class="products" style="padding-bottom: 10px; font-size: 10px;">
             <h2>Products</h2>
@@ -83,8 +83,9 @@
             <p>Kurir : {{ $order->kurir }} {{ $order->service }}</p>
             <p>Resi : {{ $order->resi }}</p>
         </div>
-        <div style="padding: 10px; text-align: center;">
+        <div style="padding: 5px; text-align: center;">
             <p>Terimakasih telah berbelanja di toko kami</p>
+            <p><img src="https://i.ibb.co/MPSph8x/LOGO-SPIRIT-2016.png" width="100px" alt=""></p>
         </div>
     </div>
 </body>

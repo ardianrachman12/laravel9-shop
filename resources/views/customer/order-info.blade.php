@@ -23,11 +23,11 @@
                             </tr>
                             <tr>
                                 <td class="fw-bold">Email</td>
-                                <td>: {{ $address->members->email }}</td>
+                                <td>: {{ $address->users->email }}</td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">Phone</td>
-                                <td>: {{ $address->members->no_hp }}</td>
+                                <td>: {{ $address->users->no_hp }}</td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">Address</td>

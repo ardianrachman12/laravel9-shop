@@ -51,7 +51,7 @@
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id=""
-                                                placeholder="Name" value="{{ old('nama') }}" name="nama" required>
+                                                placeholder="Name" value="{{ old('name') }}" name="name" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"

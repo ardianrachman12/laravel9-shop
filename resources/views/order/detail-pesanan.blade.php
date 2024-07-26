@@ -13,15 +13,15 @@
                 <tbody>
                     <tr>
                         <td>Nama</td>
-                        <td>: {{ $order->members->nama }}</td>
+                        <td>: {{ $order->users->name }}</td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td>: {{ $order->members->email }}</td>
+                        <td>: {{ $order->users->email }}</td>
                     </tr>
                     <tr>
                         <td>Phone</td>
-                        <td>: {{ $order->members->no_hp }}</td>
+                        <td>: {{ $order->users->no_hp }}</td>
                     </tr>
                 </tbody>
             </table>

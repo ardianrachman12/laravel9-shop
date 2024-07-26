@@ -29,7 +29,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:web')->group(function () {
+// Route::middleware('auth:web')->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index']);
     Route::get('/profile-admin', [DashboardController::class, 'profileAdmin']);
     Route::post('/update-profile', [DashboardController::class, 'updateProfile']);
@@ -52,6 +53,7 @@ Route::middleware('auth:web')->group(function () {
     Route::get('detailpesanan/{id}', [AdminOrderController::class, 'detailpesanan'])->name('detailpesanan');
     Route::post('confirm/{id}', [AdminOrderController::class, 'confirm'])->name('confirm');
     Route::post('inputresi/{id}', [AdminOrderController::class, 'inputresi'])->name('inputresi');
+    Route::post('addCost/{id}', [AdminOrderController::class, 'addCost'])->name('addCost');
 
     Route::get('/report/revenue', [AdminReportController::class, 'revenue'])->name('revenue.report');
     // Route::get('/export-excel/{startDate}/{endDate}', [AdminReportController::class, 'generateReport'])->name('export-revenue');
@@ -64,6 +66,7 @@ Route::middleware('auth:web')->group(function () {
     // Route::get('/revenuePdf/{startDate}/{endDate}',[AdminReportController::class, 'revenuePdf'])->name('revenuePdf');
 
 });
+// });
 
 Route::middleware('auth:web,member')->group(function () {
     Route::post('delivered/{id}', [AdminOrderController::class, 'delivered'])->name('delivered');
@@ -93,7 +96,9 @@ Route::post('/register', [AuthController::class, 'registerStore'])->name('auth.r
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('web');
 Route::post('payment/notification', [PaymentController::class, 'notification']);
 
-Route::middleware('auth:member')->group(function () {
+// Route::middleware('auth:member')->group(function () {
+    
+Route::middleware(['auth', 'role:member'])->group(function () {
     // Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/cart', [OrderController::class, 'index'])->name('cart');
     Route::post('/order/{id}', [OrderController::class, 'orderStore'])->name('order.orderStore');
@@ -126,4 +131,6 @@ Route::middleware('auth:member')->group(function () {
     // Route::get('/checkout/getcost',[CheckoutController::class, 'getcost'])->name('getcost');
 
     // Route::get('/invoice', [CheckoutController::class, 'invoice']);
+
+    Route::post('/order-whatsapp', [CheckoutController::class, 'orderWhatsapp'])->name('orderWhatsapp');
 });

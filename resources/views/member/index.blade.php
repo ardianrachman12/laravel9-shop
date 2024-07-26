@@ -17,7 +17,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
+                            <th>name</th>
                             <th>Email</th>
                             <th>No HP</th>
                             <th>Action</th>
@@ -27,7 +27,7 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama }}</td>
+                                <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->no_hp }}</td>
                                 <td>

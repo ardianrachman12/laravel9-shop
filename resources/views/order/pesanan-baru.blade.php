@@ -26,7 +26,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->kode }}</td>
-                                <td>{{ $item->members->nama }}</td>
+                                <td>{{ $item->users->name }}</td>
                                 @if ($item->status_pembayaran == 0)
                                     @php
                                         $item->status_pembayaran = 'UNPAID';

@@ -44,7 +44,7 @@ class OrderController extends Controller
     }
     public function detailpesanan($id)
     {
-        $order = Order::with('addresses', 'members')->findOrFail($id);
+        $order = Order::with('addresses', 'users')->findOrFail($id);
         $payment = Payment::where('order_id', $order->id)->first();
 
         if ($order->status == 1 & $order->status_pembayaran == 0) {
@@ -93,5 +93,14 @@ class OrderController extends Controller
         $order->status = 4;
         $order->update();
         return redirect()->back()->with('success', 'pesanan berhasil diterima');
+    }
+
+    public function addCost(Request $request, $id){
+        $order = Order::findOrFail($id);
+        $order->status = 2;
+        $order->ongkir = $request->input('ongkir');
+        $order->grand_total = $order->grand_total + $request->input('ongkir') - $request->input('diskon');
+        $order->update();
+        return redirect()->back()->with('success', 'pesanan berhasil dikonfirmasi');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Member;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -15,7 +16,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $data = Member::get();
+        $data = User::where('role', 'member')->get();
         return view('member.index', compact('data'));
     }
 
@@ -82,7 +83,7 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        $data = Member::findOrFail($id);
+        $data = User::where('role', 'member')->findOrFail($id);
         $data->delete();
         return redirect()->back()->with('success', 'Berhasil hapus data');
     }

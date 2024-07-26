@@ -17,9 +17,9 @@ class Address extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function members(): BelongsTo
+    public function users(): BelongsTo
     {
-        return $this->belongsTo(Member::class, 'member_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

@@ -3,15 +3,15 @@
 @section('title', 'Slider')
 
 @section('content')
-@include('layouts.alert')
+    @include('layouts.alert')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h4 class="card-title">Data Slider</h4>
+            <div class="d-flex justify-content-between">
+                <h4 class="card-title">Data Slider</h4>
+                <a href="{{ route('slider.create') }}" class="btn btn-primary">Tambah data</a>
+            </div>
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('slider.create') }}" class="btn btn-primary mb-3">Tambah data</a>
-            </div>
             <div class="table-responsive">
                 <table id="myTable" class="table table-bordered table-hover table-striped">
                     <thead>

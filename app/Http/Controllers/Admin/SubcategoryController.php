@@ -42,9 +42,25 @@ class SubcategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Subcategory::create($request->all());
-        return redirect('subkategori')->with('success', 'sukses tambah data');
+        // Validasi langsung di dalam method store
+        $validatedData = $request->validate([
+            'category_id' => 'required',
+            'nama' => 'required',
+            'deskripsi' => 'required',
+        ], [
+            'category_id.required' => 'Kolom kategori harus diisi.',
+            'nama.required' => 'Kolom nama harus diisi.',
+            'deskripsi.required' => 'Kolom deskripsi harus diisi.',
+        ]);
+
+        try {
+            Subcategory::create($validatedData);
+            return redirect('subkategori')->with('success', 'Berhasil tambah data');
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'Gagal tambah data: ' . $e->getMessage());
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -67,7 +83,7 @@ class SubcategoryController extends Controller
     {
         $category = Category::all();
         $data = Subcategory::with('categories')->findOrFail($id);
-        return view('subkategori.edit', compact('data','category'));
+        return view('subkategori.edit', compact('data', 'category'));
     }
 
     /**

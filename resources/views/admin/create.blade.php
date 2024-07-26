@@ -19,6 +19,10 @@
                     <input type="email" class="form-control mb-2" name="email">
                 </div>
                 <div>
+                    <label>No HP</label>
+                    <input type="text" class="form-control mb-2" name="no_hp">
+                </div>
+                <div>
                     <label>Password</label>
                     <input type="text" class="form-control mb-2" name="password">
                 </div>

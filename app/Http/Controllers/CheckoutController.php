@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -24,13 +25,13 @@ class CheckoutController extends Controller
 
     public function shipping()
     {
-        $profil = Auth::guard('member')->user();
+        $profil = Auth::user();
         if ($profil) {
-            $nama = $profil->nama;
+            $name = $profil->name;
             $email = $profil->email;
             $phone = $profil->no_hp;
-            $address = Address::where('member_id', $profil->id)->first();
-            $order = Order::where('member_id', $profil->id)->where('status', 0)->first();
+            $address = Address::where('user_id', $profil->id)->first();
+            $order = Order::where('user_id', $profil->id)->where('status', 0)->first();
             $orderdetail = Orderdetail::with('orders', 'products')->where('order_id', $order->id)->get();
         }
 
@@ -58,17 +59,17 @@ class CheckoutController extends Controller
         $provinces = Province::all();
         $cities = City::all();
 
-        return view('customer.checkout', compact('nama', 'email', 'phone', 'address', 'category', 'sub', 'cities', 'provinces', 'order', 'orderdetail', 'responsecost', 'results'));
+        return view('customer.checkout', compact('name', 'email', 'phone', 'address', 'category', 'sub', 'cities', 'provinces', 'order', 'orderdetail', 'responsecost', 'results'));
     }
 
     public function placeorder(Request $request)
     {
-        $profil = Auth::guard('member')->user();
+        $profil = Auth::user();
         if ($profil) {
-            $address = Address::where('member_id', $profil->id)->first();
+            $address = Address::where('user_id', $profil->id)->first();
         }
 
-        $order = Order::where('member_id', auth('member')->user()->id)->where('status', 0)->first();
+        $order = Order::where('user_id', auth()->user()->id)->where('status', 0)->first();
 
         $order->status = 1;
         $serviceData = explode('|', $request->service);
@@ -104,10 +105,10 @@ class CheckoutController extends Controller
         $category = Category::all();
         $sub = Subcategory::all();
 
-        $profil = Auth::guard('member')->user();
+        $profil = Auth::user();
         if ($profil) {
-            $address = Address::where('member_id', $profil->id)->first();
-            $order = Order::where('member_id', $profil->id)->where('status', 1)->findOrFail($id);
+            $address = Address::where('user_id', $profil->id)->first();
+            $order = Order::where('user_id', $profil->id)->where('status', 1)->findOrFail($id);
             $orderdetail = Orderdetail::where('order_id', $order->id)->get();
         }
         // Set your Merchant Server Key
@@ -146,9 +147,9 @@ class CheckoutController extends Controller
         $category = Category::all();
         $sub = Subcategory::all();
 
-        $profil = Auth::guard('member')->user();
+        $profil = Auth::user();
         if ($profil) {
-            $order = Order::where('member_id', $profil->id)
+            $order = Order::where('user_id', $profil->id)
                 ->where('status', '<>', 0) // Menambahkan kondisi status tidak sama dengan 0
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -177,10 +178,10 @@ class CheckoutController extends Controller
         $category = Category::all();
         $sub = Subcategory::all();
 
-        $profil = Auth::guard('member')->user();
+        $profil = Auth::user();
         if ($profil) {
-            $address = Address::where('member_id', $profil->id)->first();
-            $order = Order::where('member_id', $profil->id)->findOrFail($id);
+            $address = Address::where('user_id', $profil->id)->first();
+            $order = Order::where('user_id', $profil->id)->findOrFail($id);
             $orderdetail = Orderdetail::where('order_id', $order->id)->get();
             $payments = Payment::where('order_id', $order->id)->get();
         }
@@ -233,10 +234,10 @@ class CheckoutController extends Controller
 
     public function invoice($id)
     {
-        $profil = Auth::guard('member')->user();
+        $profil = Auth::user();
         if ($profil) {
             // $address = Address::where('member_id', $profil->id)->first();
-            $order = Order::where('member_id', $profil->id)->findOrFail($id);
+            $order = Order::where('user_id', $profil->id)->findOrFail($id);
             // $orderdetail = Orderdetail::where('order_id', $order->id)->get();
         }
         if ($order->status == 1 & $order->status_pembayaran == 0) {
@@ -260,13 +261,13 @@ class CheckoutController extends Controller
 
     public function sendInvoice($id)
     {
-        $user = Auth::guard('member')->user();
+        $user = Auth::user();
 
         if (!$user) {
             return redirect()->back()->with('error', 'User tidak ditemukan');
         }
 
-        $order = Order::where('member_id', $user->id)->findOrFail($id);
+        $order = Order::where('user_id', $user->id)->findOrFail($id);
         // dd($order);
 
         if ($order->status == 1 && $order->status_pembayaran == 0) {
@@ -289,6 +290,79 @@ class CheckoutController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengirim invoice. Error: ' . $e->getMessage());
         }
+    }
+
+    public function orderWhatsapp(Request $request)
+    {
+        $profil = Auth::user();
+        if ($profil) {
+            $address = Address::where('user_id', $profil->id)->first();
+        }
+        $order = Order::where('user_id', auth()->user()->id)->where('status', 0)->first();
+        $orderdetail = Orderdetail::where('order_id', $order->id)->get();
+
+        $order->status = 1;
+        $order->status_pembayaran = 1;
+        $order->grand_total = $order->grand_total;
+        $order->nama_depan = $address->nama_depan;
+        $order->nama_belakang = $address->nama_belakang;
+        $order->alamat_detail = $address->alamat_detail;
+        $order->provinsi = $address->Provinces->title;
+        $order->kota = $address->Cities->title;
+        $order->kode_pos = $address->kode_pos;
+        $order->update();
+
+        $selectPayment = $request->selectPayment;
+        $payment = new Payment;
+        $payment->order_id = $order->id;
+        $payment->method = "manual";
+        $payment->status = "pending";
+        $payment->amount = $order->grand_total;
+        $payment->payment_type = "bank_transfer";
+        $payment->transaction_token = Str::random(9);
+        $payment->va_number = "";
+        $payment->vendor_name = $selectPayment;
+
+        // Membuat array dari atribut-atribut payment
+        $paymentData = [
+            'order_id' => $payment->order_id,
+            'method' => $payment->method,
+            'status' => $payment->status,
+            'amount' => $payment->amount,
+            'payment_type' => $payment->payment_type,
+            'va_number' => $payment->va_number,
+            'vendor_name' => $payment->vendor_name,
+            'transaction_token' => $payment->transaction_token,
+        ];
+
+        // Mengonversi array ke JSON dan menyimpannya di dalam kolom payloads
+        $payment->payloads = json_encode($paymentData);
+        $payment->save();
+
+        $orderDetailString = "Assalamuaikum Wr. Wb.\nSaya Ingin Order produk berikut:\n";
+        foreach ($orderdetail as  $index => $detail) {
+            $orderDetailString .= "*(" . ($index + 1) . ") - Nama Produk: " . $detail->products->nama . "*\n"; // Sesuaikan dengan nama kolom yang sesuai
+            $orderDetailString .= "*- Qty: " . $detail->qty . "*\n";
+            $orderDetailString .= "*- Subtotal: Rp. " . $detail->jumlah_harga . "*\n\n";
+        }
+
+        // Menambahkan informasi total ke string
+        $orderDetailString .= "*Total = Rp. " . $order->grand_total . "*\n";
+        $orderDetailString .= "*Metode Pembayaran: Transfer " . $selectPayment . "*\n";
+        $orderDetailString .= "*No Invoice = " . $order->kode . "*\n\n";
+        $orderDetailString .= "*Atas Nama: " . $profil->nama . "*\n";
+        $orderDetailString .= "*Alamat: " . $address->alamat_detail . "*\n";
+
+        // Membuat URL dengan informasi order detail
+        $url = urlencode($orderDetailString);
+        // Mengambil nomor WhatsApp dari .env
+        $whatsappNumber = env('WHATSAPP_NUMBER');
+
+        // Membuat URL WhatsApp dengan nomor yang diambil dari .env
+        $baseurl = "https://wa.me/{$whatsappNumber}?text=" . $url;
+
+        // dd($baseurl);
+        return redirect($baseurl);
     }
 
 

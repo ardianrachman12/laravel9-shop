@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard')
 @section('content')
-@include('layouts.alert')
+    @include('layouts.alert')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h4 class="card-title">Revenue Chart</h4>
@@ -42,6 +42,11 @@
     </div>
 @endsection
 @push('script')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript">
         var pendapatan = <?php echo json_encode($total_harga); ?>;
@@ -67,11 +72,6 @@
                 name: 'Nominal pendapatan ',
                 data: pendapatan
             }]
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
         });
     </script>
 @endpush

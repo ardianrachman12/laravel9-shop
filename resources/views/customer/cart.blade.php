@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-5 bg-light pt-lg-5 aside-checkout pb-5 pb-lg-0 my-5 my-lg-0">
+                <div class="col-12 col-lg-5 bg-light pt-lg-5 aside-checkout pb-5 pb-lg-4 my-5 my-lg-0">
                     <div class="p-4 py-lg-0 pe-lg-0 ps-lg-5">
                         <div class="pb-4 border-bottom">
                             <div class="d-flex flex-column flex-md-row justify-content-md-between mb-4 mb-md-2">
@@ -78,6 +78,60 @@
                         <a @if ($address) href="{{ route('shipping') }}" @else href="{{ route('profil') }}" onclick="return confirm('Silahkan isi alamat dahulu');" @endif
                             class="btn btn-dark w-100 text-center" role="button">Proceed to
                             checkout</a>
+                        <!-- checkout via whatsapp -->
+                        {{-- <button ($address) data-toggle="modal" data-target="#checkoutModal"
+                            class="btn btn-success w-100 text-center mt-2" type="button">checkout via WhatsApp</button> --}}
+
+                        <!-- Modal -->
+                        @if ($address)
+                            <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Checkout Form</h5>
+                                        </div>
+                                        <!-- Isi formulir disini -->
+                                        <div class="modal-body">
+                                            <form action="{{ route('orderWhatsapp') }}" method="POST" target="_blank">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="name">Nama:</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        value="{{ $profil->name }}" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name">No Handphone:</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        value="{{ $profil->no_hp }}" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="address">Alamat Pengiriman:</label>
+                                                    <input type="text" class="form-control" id="address" name="address"
+                                                        value="{{ $address->alamat_detail }}, {{ $address->cities->title }}, {{ $address->provinces->title }}, {{ $address->kode_pos }}"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="selectPayment">Metode Pembayaran:</label>
+                                                    <select name="selectPayment" id="" class="form-select"
+                                                        required>
+                                                        <option disabled>pilih pembayaran</option>
+                                                        <option value="BCA">Transfer BCA</option>
+                                                        <option value="MANDIRI">Transfer MANDIRI</option>
+                                                        <option value="BRI">Transfer BRI</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p class="fw-bold">Sub-Total : Rp. {{ $order->grand_total }}</p>
+                                                    <h6 class="text-danger">*belum termasuk ongkir</h6 class="text-danger">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Send Via Whatsapp</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

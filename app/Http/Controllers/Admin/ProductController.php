@@ -34,7 +34,7 @@ class ProductController extends Controller
     {
         $category = Category::all();
         $subcategory = Subcategory::all();
-        return view('produk.create', compact('subcategory','category'));
+        return view('produk.create', compact('subcategory', 'category'));
     }
 
     /**
@@ -45,14 +45,40 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nama' => 'required',
+            'sku' => 'required',
+            'deskripsi' => 'required',
+            'stok' => 'required|integer',
+            'berat' => 'required|numeric',
+            'harga' => 'required|numeric',
+            'subcategory_id' => 'required',
+        ], [
+            'gambar.required' => 'Gambar harus diisi.',
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar yang diperbolehkan: jpeg, png, jpg, gif.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'nama.required' => 'Nama harus diisi.',
+            'sku.required' => 'SKU harus diisi.',
+            'deskripsi.required' => 'Deskripsi harus diisi.',
+            'stok.required' => 'Stok harus diisi.',
+            'stok.integer' => 'Stok harus berupa angka.',
+            'berat.required' => 'Berat harus diisi.',
+            'berat.numeric' => 'Berat harus berupa angka.',
+            'harga.required' => 'Harga harus diisi.',
+            'harga.numeric' => 'Harga harus berupa angka.',
+            'subcategory_id.required' => 'Subkategori harus dipilih.',
+        ]);
+
         if (!$request->hasFile('gambar')) {
-            return back()->with('error', 'Gambar harus diisi');
+            return back()->with('error', 'Gambar harus diisi.');
         }
 
         $gambar = $request->file('gambar');
         $extensi = $gambar->extension();
         $nama_gambar = time() . rand(1, 9) . '.' . $extensi;
-        $gambar->move(public_path('uploads'), $nama_gambar);  
+        $gambar->move(public_path('uploads'), $nama_gambar);
 
         $input = [
             'nama' => $request->input('nama'),
@@ -64,11 +90,12 @@ class ProductController extends Controller
             'subcategory_id' => $request->input('subcategory_id'),
             'gambar' => $nama_gambar,
         ];
-        
+
         Product::create($input);
-        
-        return redirect()->route('produk.index')->with('success', 'Berhasil tambah data');
+
+        return redirect()->route('produk.index')->with('success', 'Berhasil tambah data.');
     }
+
 
 
     /**
@@ -93,7 +120,7 @@ class ProductController extends Controller
         $category = Category::all();
         $data = Product::with('subcategories')->findOrFail($id);
         $subcategory = Subcategory::all();
-        return view('produk.edit', compact('data','subcategory','category'));
+        return view('produk.edit', compact('data', 'subcategory', 'category'));
     }
 
     /**
@@ -123,8 +150,8 @@ class ProductController extends Controller
                 'harga' => $request->input('harga'),
                 'subcategory_id' => $request->input('subcategory_id'),
                 'gambar' => $nama_gambar,
-            ];  
-        }else{
+            ];
+        } else {
             $input = [
                 'nama' => $request->input('nama'),
                 'sku' => $request->input('sku'),
@@ -137,7 +164,7 @@ class ProductController extends Controller
         }
 
         $data->update($input);
-        
+
         return redirect()->route('produk.index')->with('success', 'Berhasil update data');
     }
 
@@ -155,12 +182,13 @@ class ProductController extends Controller
         return redirect('produk')->with('success', 'berhasil hapus data');
     }
 
-    public function selectCategory(Request $request){
+    public function selectCategory(Request $request)
+    {
         $id_category = $request->id_category;
 
-        $subcategory = Subcategory::where('category_id',$id_category)->get();
+        $subcategory = Subcategory::where('category_id', $id_category)->get();
 
-        foreach($subcategory as $subcategory){
+        foreach ($subcategory as $subcategory) {
             echo "<option value='$subcategory->id'>$subcategory->nama</option>";
         }
     }

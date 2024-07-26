@@ -5,12 +5,12 @@
     @include('layouts.alert')
     <div class="card shadow mb-4">
         <div class="card-header py3">
-            <h4 class="card-title">Data Admin</h4>
+            <div class="d-flex justify-content-between">
+                <h4 class="card-title">Data Admin</h4>
+                <a href="{{ route('admin.create') }}" class="btn btn-primary">Tambah data</a>
+            </div>
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">Tambah data</a>
-            </div>
             <div class="table-responsive">
                 <table id="myTable" class="table table-bordered table-hover table-striped">
                     <thead>
@@ -18,6 +18,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>No HP</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -27,10 +28,13 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
+                                <td>{{ $item->no_hp }}</td>
                                 <td>
                                     <a href="{{ route('admin.edit', $item->id) }}" class="btn btn-warning btn-sm">edit</a>
-                                    <form action="" method="post" onsubmit="return confirm('Yakin akan dicancel?')">
+                                    <form action="{{ route('admin.destroy', $item->id) }}" method="post"
+                                        onsubmit="return confirm('Yakin akan dihapus?')">
                                         @csrf
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm mt-1">hapus</button>
                                     </form>
                                 </td>

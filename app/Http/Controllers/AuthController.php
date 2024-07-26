@@ -31,11 +31,11 @@ class AuthController extends Controller
             'password.required' => 'password wajib diisi',
         ]);
 
-        if (Auth::guard('web')->attempt($infoLogin, $remember)) {
+        if (Auth::attempt($infoLogin, $remember) and auth()->user()->role == 'admin') {
             $request->session()->regenerate();
             return redirect('dashboard');
         }
-        if (Auth::guard('member')->attempt($infoLogin, $remember)) {
+        if (Auth::attempt($infoLogin, $remember) and auth()->user()->role == 'member') {
             $request->session()->regenerate();
             return redirect('/');
         } else {
@@ -52,8 +52,8 @@ class AuthController extends Controller
     public function registerStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|min:5',
-            'email' => 'required|email|unique:members',
+            'name' => 'required|min:5',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'no_hp' => 'required',
         ], [
@@ -71,8 +71,9 @@ class AuthController extends Controller
         }
 
         $request['password'] = bcrypt($request->password);
+        $request['role'] = "member";
 
-        Member::create($request->all());
+        User::create($request->all());
 
         return redirect()->route('auth.login')->with('success', 'berhasil register');
     }
@@ -80,14 +81,14 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        if ((Auth::guard('web')->check())) {
-            Auth::guard('web')->logout();
+        if ((Auth::check())) {
+            Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect()->route('auth.login');
         }
-        if ((Auth::guard('member')->check())) {
-            Auth::guard('member')->logout();
+        if ((Auth::check())) {
+            Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect()->route('auth.login');
@@ -118,9 +119,9 @@ class AuthController extends Controller
     protected function getGuard($email)
     {
         // Cek apakah email terdapat di dalam tabel 'members'
-        if (Member::where('email', $email)->first()) {
-            return 'members';
-        }
+        // if (Member::where('email', $email)->first()) {
+        //     return 'members';
+        // }
 
         // Jika tidak, default ke guard 'web'
         return 'users';
@@ -161,10 +162,8 @@ class AuthController extends Controller
                 'required',
                 function ($attribute, $value, $fail) {
                     // Validasi bahwa current_password sama dengan password lama
-                    if (Auth::guard('web')->check()) {
-                        $user = Auth::guard('web')->user();
-                    } else {
-                        $user = Auth::guard('member')->user();
+                    if (Auth::check()) {
+                        $user = Auth::user();
                     }
                     if (!Hash::check($value, $user->password)) {
                         $fail('Password saat ini tidak valid.');
@@ -182,14 +181,14 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            if (Auth::guard('web')->check()) {
+            if (Auth::user()->role == "admin") {
                 return redirect('/profile-admin')->withErrors($validator)->withInput();
             }else {
                 return redirect('/profile')->withErrors($validator)->withInput();
             }
         }
 
-        if (Auth::guard('web')->check()) {
+        if (Auth::user()->role == "admin") {
             $user = Auth::guard('web')->user();
             // Ubah sandi user
             $user = User::where('email', $user->email)->first();
@@ -198,9 +197,9 @@ class AuthController extends Controller
             return redirect('/profile-admin')->with('success', 'Password berhasil diubah');
         }
         // Periksa apakah pengguna terautentikasi (pengguna member)
-        elseif (Auth::guard('member')->check()) {
-            $user = Auth::guard('member')->user();
-            $user = Member::where('email', $user->email)->first();
+        elseif (Auth::user()->role == 'member') {
+            $user = Auth::user();
+            $user = User::where('email', $user->email)->first();
             $user->password = bcrypt($request->new_password);
             $user->save();
             return redirect('/profile')->with('success', 'Password berhasil diubah');

@@ -3,7 +3,7 @@
 @section('title', 'Subkategori')
 
 @section('content')
-@include('layouts.alert')
+    @include('layouts.alert')
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -15,12 +15,12 @@
     @endif
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h4 class="card-title">Data Subkategori</h4>
+            <div class="d-flex justify-content-between">
+                <h4 class="card-title">Data Subkategori</h4>
+                <a href="{{ route('subkategori.create') }}" class="btn btn-primary">Tambah data</a>
+            </div>
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('subkategori.create') }}" class="btn btn-primary mb-3">Tambah data</a>
-            </div>
             <div class="table-responsive">
                 <table id="myTable" class="table table-bordered table-hover table-striped">
                     <thead>
@@ -67,12 +67,13 @@
                             <h5 class="modal-title" id="uploadModalLabel">Unggah File</h5>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('uploadSubcategory')}}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('uploadSubcategory') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="input-group mb-3">
                                     <label class="input-group-text" for="inputGroupFile01"><span
                                             data-feather="file-plus"></span></label>
-                                    <input type="file" class="form-control" id="inputGroupFile01" name="file_subcategory">
+                                    <input type="file" class="form-control" id="inputGroupFile01"
+                                        name="file_subcategory">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Unggah</button>
                             </form>

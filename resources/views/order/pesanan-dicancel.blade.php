@@ -6,7 +6,7 @@
 @include('layouts.alert')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h4 class="card-title">Pesanan dicancel</h4>
+            <h4 class="card-title">Pesanan dibatalkan</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -26,7 +26,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->kode }}</td>
-                                <td>{{ $item->members->nama }}</td>
+                                <td>{{ $item->users->name }}</td>
                                 @if ($item->status_pembayaran == 0)
                                     @php
                                         $item->status_pembayaran = 'UNPAID';
