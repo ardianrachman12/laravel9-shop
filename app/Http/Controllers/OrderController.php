@@ -112,10 +112,6 @@ class OrderController extends Controller
         $order->grand_total = $order->grand_total + $product->harga * $request->qty;
         $order->update();
 
-        // return response()->json([
-        //     'message' => 'berhasil tambah keranjang'
-        // ]);
-
         return redirect()->back()->with('success', 'Berhasil ditambahkan ke keranjang');
     }
 

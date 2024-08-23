@@ -73,7 +73,7 @@
                                     </span>
                                 </div>
                                 <p class="fw-bolder text-end text-muted m-0">Rp.
-                                    {{ $orders->jumlah_harga }}
+                                    {{ number_format($orders->jumlah_harga, 0, ',', '.') }}
                                 </p>
                             </div>
                         </div> <!-- / Cart Item-->
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-9 offset-1">
                             <p class="fw-bolder text-end text-muted m-0">: Rp.
-                                {{ $order->total_harga }}
+                                {{ number_format($order->total_harga, 0, ',', '.') }}
                             </p>
                         </div>
                     </div>
@@ -122,13 +122,13 @@
                         </div>
                         <div class="col-9 offset-1">
                             @if ($order->status_pembayaran == 'PAID')
-                            <p class="fw-bolder text-end text-muted m-0">:
-                                {{ $payments->first()->status }}
-                            </p>
+                                <p class="fw-bolder text-end text-muted m-0">:
+                                    {{ $payments->first()->status }}
+                                </p>
                             @else
-                            <p class="fw-bolder text-end text-muted m-0">:
-                                {{ $order->status_pembayaran }}
-                            </p>
+                                <p class="fw-bolder text-end text-muted m-0">:
+                                    {{ $order->status_pembayaran }}
+                                </p>
                             @endif
                         </div>
                     </div>
@@ -145,9 +145,11 @@
                         </div>
                     </div>
                     <div class="py-2 mt-4 border-top d-flex justify-content-md-start align-items-center">
-                        <a href="{{ route('invoice', $order->id) }}" class="btn btn-dark" type="button"><span><i class="ri-printer-line"></i></span> 
+                        <a href="{{ route('invoice', $order->id) }}" class="btn btn-dark" type="button"><span><i
+                                    class="ri-printer-line"></i></span>
                             Invoice</a>
-                        <a href="{{route('sendInvoice', $order->id)}}" class="btn btn-dark ms-2" type="button"><span><i class="ri-mail-send-line"></i></span>
+                        <a href="{{ route('sendInvoice', $order->id) }}" class="btn btn-dark ms-2" type="button"><span><i
+                                    class="ri-mail-send-line"></i></span>
                             Invoice</a>
                         @if ($order->status == 'pesanan dikirim')
                             <form action="{{ route('delivered', $order->id) }}" method="POST">
@@ -156,9 +158,10 @@
                             </form>
                         @endif
                         @if ($order->status == 'pesanan baru' && $order->status_pembayaran == 'UNPAID')
-                        <div class="ms-2">
-                            <a href="{{ $redirect }}" class="btn btn-dark" type="button" target="_blank">Pay Now</a>
-                        </div>
+                            <div class="ms-2">
+                                <a href="{{ $redirect }}" class="btn btn-dark" type="button" target="_blank">Pay
+                                    Now</a>
+                            </div>
                         @endif
                         @if ($order->status == 'pesanan baru')
                             <form action="{{ route('cancel', $order->id) }}" method="POST">

@@ -133,14 +133,25 @@
                                 account
                             </a>
                             @if (Auth::check())
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('profil') }}">Profile</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('orderlist') }}">Orders</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('auth.logout') }}"
-                                            onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('auth.forgot-password') }}">Forgotten
-                                            Password</a></li>
-                                </ul>
+                                @if (auth()->user()->role == 'member')
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('profil') }}">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('orderlist') }}">Orders</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('auth.logout') }}"
+                                                onclick="return confirm('Apakah Anda yakin ingin logout?')">Logout</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                                href="{{ route('auth.forgot-password') }}">Forgotten
+                                                Password</a></li>
+                                    </ul>
+                                @else
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/login">Login</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('auth.register') }}">Register</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="/forgot-password">Forgotten Password</a></li>
+                                    </ul>
+                                @endif
                             @else
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="/login">Login</a></li>
@@ -153,7 +164,8 @@
                         <!-- /Navbar Login-->
                         <!-- Navbar Cart Icon-->
                         <li class="d-lg-inline-block nav-item dropdown-cart">
-                            <a class="nav-link me-0 disable-child-pointer" href="{{ route('cart') }}" type="button">
+                            <a class="nav-link me-0 disable-child-pointer" href="{{ route('cart') }}"
+                                type="button">
                                 Cart
                             </a>
                         </li>
@@ -166,7 +178,7 @@
                         </li>
                         <!-- /Navbar Cart Icon-->
                         <!-- / Menu-->
-                        </ul>
+                    </ul>
                 </div>
                 <!-- / Main Navigation-->
 

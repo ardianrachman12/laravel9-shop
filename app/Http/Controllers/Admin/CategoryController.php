@@ -40,10 +40,6 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // $validator = $request->validate([
-        //     'nama' => 'required|unique:categories,nama',
-        // ]);
-
         Category::create($request->all());
         return redirect('/kategori')->with('success', 'sukses tambah data');
     }

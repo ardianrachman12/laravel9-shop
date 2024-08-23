@@ -46,7 +46,7 @@
                                                         </span>
                                                     </div>
                                                     <p class="fw-bolder text-end text-muted m-0">Rp.
-                                                        {{ $orders->jumlah_harga }}
+                                                        {{ number_format($orders->jumlah_harga , 0, ',', '.') }}
                                                     </p>
                                                 </div>
                                             </div> <!-- / Cart Item-->
@@ -66,7 +66,7 @@
                                     <p class="m-0 fw-bold fs-5">Order Total</p>
                                     {{-- <span class="text-muted small">Inc $45.89 sales tax</span> --}}
                                 </div>
-                                <p class="m-0 fs-5 fw-bold">Rp. {{ $orders->orders->total_harga }}</p>
+                                <p class="m-0 fs-5 fw-bold">Rp. {{ number_format($orders->orders->total_harga , 0, ',', '.') }}</p>
                             </div>
                         </div>
                         {{-- <div class="py-4">

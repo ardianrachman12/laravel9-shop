@@ -68,7 +68,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 // });
 
-Route::middleware('auth:web,member')->group(function () {
+Route::middleware(['auth', 'role:admin,member'])->group(function () {
     Route::post('delivered/{id}', [AdminOrderController::class, 'delivered'])->name('delivered');
     Route::post('cancel/{id}', [AdminOrderController::class, 'cancel'])->name('cancel');
 });
@@ -97,7 +97,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout')->m
 Route::post('payment/notification', [PaymentController::class, 'notification']);
 
 // Route::middleware('auth:member')->group(function () {
-    
+
 Route::middleware(['auth', 'role:member'])->group(function () {
     // Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/cart', [OrderController::class, 'index'])->name('cart');

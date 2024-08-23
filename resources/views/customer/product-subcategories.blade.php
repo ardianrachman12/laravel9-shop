@@ -16,7 +16,8 @@
                         </ol>
                     </nav>
                     <h1 class="fw-bold fs-3 mb-2">{{ $subcategory->nama }}</h1>
-                    <p class="m-0 text-muted small">Showing {{$subcategory->products->count()}} of {{$subcategory->products->count()}}</p>
+                    <p class="m-0 text-muted small">Showing {{ $subcategory->products->count() }} of
+                        {{ $subcategory->products->count() }}</p>
                 </div>
                 {{-- <div class="d-flex justify-content-end align-items-center mt-4 mt-lg-0 flex-column flex-md-row">
 
@@ -59,7 +60,8 @@
                                 <a class="text-decoration-none link-cover"
                                     href="{{ route('home.product-detail', ['id' => $produk->id]) }}">{{ $produk->nama }}</a>
                                 {{-- <small class="text-muted d-block">{{ $produk->deskripsi }}</small> --}}
-                                <p class="mt-2 mb-0 small"><span class="text">Rp.{{ $produk->harga }}</span>
+                                <p class="mt-2 mb-0 small"><span
+                                        class="text">Rp.{{ number_format($produk->harga, 0, ',', '.') }}</span>
                                 </p>
                             </div>
                         </div>

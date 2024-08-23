@@ -24,7 +24,19 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{ asset('sbadmin2/vendor/bootstrap/css/bootstrap.min.css') }}"> --}}
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7TYHKJNHWW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7TYHKJNHWW');
+    </script>
 </head>
 
 <body class="bg-gradient-info">
@@ -61,7 +73,8 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck" name="remember"> 
+                                                <input type="checkbox" class="custom-control-input" id="customCheck"
+                                                    name="remember">
                                                 <label class="custom-control-label" for="customCheck">Remember
                                                     Me</label>
                                             </div>
@@ -70,7 +83,8 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="{{route('auth.forgot-password')}}">Forgot Password?</a>
+                                        <a class="small" href="{{ route('auth.forgot-password') }}">Forgot
+                                            Password?</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="{{ route('auth.register') }}">Create an Account!</a>

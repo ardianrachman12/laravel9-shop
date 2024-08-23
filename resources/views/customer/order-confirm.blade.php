@@ -52,27 +52,27 @@
                         </div>
                     </div>
                     @foreach ($orderdetail as $orders)
-                    <div class="row mx-0 py-4 g-0 border-bottom">
-                        <div class="col-2 position-relative">
-                            <picture class="d-block border">
-                                <img class="img-fluid" src="/uploads/{{ $orders->products->gambar }}"
-                                alt="HTML Bootstrap Template by Pixel Rocket">
-                            </picture>
-                        </div>
-                        <div class="col-9 offset-1">
-                            <div>
-                                <h6 class="justify-content-between d-flex align-items-start mb-2">
-                                    {{ $orders->products->nama }}
-                                </h6>
-                                <span class="d-block text-muted fw-bolder text-uppercase fs-10">
-                                    Qty : {{ $orders->qty }}
-                                </span>
+                        <div class="row mx-0 py-4 g-0 border-bottom">
+                            <div class="col-2 position-relative">
+                                <picture class="d-block border">
+                                    <img class="img-fluid" src="/uploads/{{ $orders->products->gambar }}"
+                                        alt="HTML Bootstrap Template by Pixel Rocket">
+                                </picture>
                             </div>
-                            <p class="fw-bolder text-end text-muted m-0">Rp.
-                                {{ $orders->jumlah_harga }}
-                            </p>
-                        </div>
-                    </div> <!-- / Cart Item-->
+                            <div class="col-9 offset-1">
+                                <div>
+                                    <h6 class="justify-content-between d-flex align-items-start mb-2">
+                                        {{ $orders->products->nama }}
+                                    </h6>
+                                    <span class="d-block text-muted fw-bolder text-uppercase fs-10">
+                                        Qty : {{ $orders->qty }}
+                                    </span>
+                                </div>
+                                <p class="fw-bolder text-end text-muted m-0">Rp.
+                                    {{ number_format($order->jumlah_harga, 0, ',', '.') }}
+                                </p>
+                            </div>
+                        </div> <!-- / Cart Item-->
                     @endforeach
                     <div class="row mx-0 pt-4 g-0">
                         <div class="col-2 position-relative">
@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-9 offset-1">
                             <p class="fw-bolder text-end text-muted m-0">: Rp.
-                                {{ $order->total_harga }}
+                                {{ number_format($order->total_harga, 0, ',', '.') }}
                             </p>
                         </div>
                     </div>

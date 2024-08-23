@@ -119,7 +119,7 @@ class ProductController extends Controller
     {
         $category = Category::all();
         $data = Product::with('subcategories')->findOrFail($id);
-        $subcategory = Subcategory::all();
+        $subcategory = Subcategory::with('categories')->get();
         return view('produk.edit', compact('data', 'subcategory', 'category'));
     }
 

@@ -67,7 +67,7 @@
                 <p>Virtual Account : {{ $order->payments->first()->va_number }}</p>
                 <p>Status Payment: {{ $order->payments->first()->status }}</p>
             </div>
-            @else
+        @else
             <div class="shipping-info" style="padding-bottom: 10px; font-size: 10px;">
                 <h2>Payment Information</h2>
                 <p>Status Payment: UNPAID</p>
@@ -85,7 +85,9 @@
         </div>
         <div style="padding: 5px; text-align: center;">
             <p>Terimakasih telah berbelanja di toko kami</p>
-            <p><img src="https://i.ibb.co/MPSph8x/LOGO-SPIRIT-2016.png" width="100px" alt=""></p>
+            <p><a href="https://ibb.co.com/L948h6C"><img src="https://i.ibb.co.com/CVxzsvn/LOGO-SPIRIT-2016.png"
+                        width="100px" alt="LOGO-SPIRIT-2016"/></a>
+            </p>
         </div>
     </div>
 </body>

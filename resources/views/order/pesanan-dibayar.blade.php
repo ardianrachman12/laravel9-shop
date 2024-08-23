@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover table-striped">
+                <table id="myTable" class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -97,3 +97,10 @@
         </div>
     </div>
 @endsection
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+@endpush

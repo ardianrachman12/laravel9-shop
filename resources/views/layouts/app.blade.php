@@ -25,6 +25,18 @@
     <link rel="stylesheet" href="{{ asset('sbadmin2/vendor/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     {{-- <link rel="stylesheet" href="{{ asset('sbadmin2/vendor/datatables/dataTables.bootstrap4.min.css') }}"> --}}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7TYHKJNHWW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7TYHKJNHWW');
+    </script>
 </head>
 
 <body id="page-top">

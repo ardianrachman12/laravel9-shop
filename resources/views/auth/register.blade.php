@@ -23,7 +23,19 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{ asset('sbadmin2/vendor/bootstrap/css/bootstrap.min.css') }}"> --}}
+    \
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7TYHKJNHWW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7TYHKJNHWW');
+    </script>
 </head>
 
 <body class="bg-gradient-info">
@@ -42,7 +54,7 @@
                                     <div class="text-center">
                                         <a href="/">
                                             <img class="mb-2" src="{{ asset('bundle1/assets/images/spirit.png') }}"
-                                            width="100px" alt="">
+                                                width="100px" alt="">
                                         </a>
                                         <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                                     </div>
@@ -74,7 +86,8 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="{{route('auth.forgot-password')}}">Forgot Password?</a>
+                                        <a class="small" href="{{ route('auth.forgot-password') }}">Forgot
+                                            Password?</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="{{ route('auth.login') }}">Already have an account?

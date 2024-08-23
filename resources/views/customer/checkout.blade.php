@@ -149,7 +149,7 @@
                                             </span>
                                         </div>
                                         <p class="fw-bolder text-end text-muted m-0">Rp.
-                                            {{ $orders->jumlah_harga }}
+                                            {{ number_format($orders->jumlah_harga, 0, ',', '.') }}
                                         </p>
                                     </div>
                                 </div> <!-- / Cart Item-->
@@ -181,7 +181,7 @@
                             <div class="py-4 border-bottom">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <p class="m-0 fw-bolder fs-6">Total Harga Produk</p>
-                                    <p class="m-0 fs-6 fw-bolder">Rp. {{ $order->total_harga }}</p>
+                                    <p class="m-0 fs-6 fw-bolder">Rp. {{ number_format($order->total_harga , 0, ',', '.') }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center ">
                                     <p class="m-0 fw-bolder fs-6">Ongkos Kirim</p>
@@ -194,7 +194,7 @@
                                         <p class="m-0 fw-bold fs-5">Grand Total</p>
                                         {{-- <span class="text-muted small">Inc $45.89 sales tax</span> --}}
                                     </div>
-                                    <p id="grand-total" class="m-0 fs-5 fw-bold">Rp. {{ $order->grand_total }}</p>
+                                    <p id="grand-total" class="m-0 fs-5 fw-bold">Rp. {{ number_format($order->grand_total , 0, ',', '.') }}</p>
                                 </div>
                             </div>
                             <div class="py-4">

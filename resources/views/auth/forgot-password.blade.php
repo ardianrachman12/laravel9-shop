@@ -25,6 +25,18 @@
     <link href="{{ asset('sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{ asset('sbadmin2/vendor/bootstrap/css/bootstrap.min.css') }}"> --}}
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7TYHKJNHWW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7TYHKJNHWW');
+    </script>
 </head>
 
 <body class="bg-gradient-info">
@@ -50,7 +62,7 @@
                                         <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                             and we'll send you a link to reset your password!</p>
                                     </div>
-                                    <form action="{{route('password.email')}}" method="POST" class="user">
+                                    <form action="{{ route('password.email') }}" method="POST" class="user">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email"

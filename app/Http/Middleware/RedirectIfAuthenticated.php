@@ -20,17 +20,17 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, ...$guards)
     {
         // $guards = empty($guards) ? [null] : $guards;
-        $guards = 'web';
-        $guards1 = 'member';
+        // $guards = 'web';
+        // $guards1 = 'member';
 
         // foreach ($guards as $guard) {
-        if (Auth::guard($guards)->check()) {
-            return redirect('/dashboard');
-        } else if (Auth::guard($guards1)->check()) {
-            return route('home');
-        } else {
-            return route('home');
-        }
+        // if (Auth::guard($guards)->check()) {
+        //     return redirect('/dashboard');
+        // } else if (Auth::guard($guards1)->check()) {
+        //     return route('home');
+        // } else {
+        //     return route('home');
+        // }
         // }
         return $next($request);
 

@@ -520,6 +520,7 @@ body {
   direction: ltr;
   color: #fff !important;
   background: var(--primary-color) !important;
+  /* background: #8A2BE2 !important; */
 }
 .message-card.mc-sender .message .message-time {
   color: rgba(255, 255, 255, 0.67);

@@ -40,7 +40,7 @@
                 {{-- <p class="messenger-title"><span>Your Space</span></p>
                {!! view('Chatify::layouts.listItem', ['get' => 'saved']) !!} --}}
                 {{-- Contact --}}
-                @if (auth()->user()->role == 'member')
+                @if (auth()->user()->role == 'member' || auth()->user()->role == 'guest' )
                     @php
                         $users = App\Models\User::where('role', 'admin')->get();
                     @endphp
@@ -111,7 +111,7 @@
                     $auth = auth()->user()->role;
                     // dd($auth);
                 @endphp
-                @if ($auth == 'member')
+                @if ($auth == 'member' || $auth == 'guest')
                     <p class="message-hint center-el"><span>Please select admin to start chat</span></p>
                 @else
                     <p class="message-hint center-el"><span>Please select a chat to start messaging</span></p>

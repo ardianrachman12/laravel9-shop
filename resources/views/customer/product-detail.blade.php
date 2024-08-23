@@ -65,7 +65,7 @@
 
                         <h1 class="mb-1 fs-2 fw-bold">{{ $productdetail->nama }}</h1>
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="fs-4 m-0">Rp. {{ $productdetail->harga }}</p>
+                            <p class="fs-4 m-0">Rp. {{ number_format($productdetail->harga, 0, ',', '.') }}</p>
                         </div>
                         <div class="mb-3">
                             <small class="text-uppercase pt-4 d-block fw-bolder text-muted">
