@@ -76,7 +76,7 @@
                                                 required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
+                                            <input type="number" class="form-control form-control-user"
                                                 placeholder="No Handphone" value="{{ old('no_hp') }}" name="no_hp"
                                                 required>
                                         </div>

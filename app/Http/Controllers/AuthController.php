@@ -55,7 +55,7 @@ class AuthController extends Controller
             'name' => 'required|min:5',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'no_hp' => 'required',
+            'no_hp' => 'required|numeric',
         ], [
             'name.required' => 'Nama diperlukan.',
             'name.min' => 'Nama harus memiliki setidaknya 5 karakter.',
@@ -64,6 +64,7 @@ class AuthController extends Controller
             'email.unique' => 'Email sudah digunakan.',
             'password.required' => 'Password diperlukan.',
             'no_hp.required' => 'Nomor HP diperlukan.',
+            'no_hp.numeric' => 'Nomor HP harus berupa angka.',
         ]);
 
         if ($validator->fails()) {
