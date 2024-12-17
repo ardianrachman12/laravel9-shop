@@ -68,6 +68,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 // });
 
+//authentication
 Route::middleware(['auth', 'role:admin,member'])->group(function () {
     Route::post('delivered/{id}', [AdminOrderController::class, 'delivered'])->name('delivered');
     Route::post('cancel/{id}', [AdminOrderController::class, 'cancel'])->name('cancel');
